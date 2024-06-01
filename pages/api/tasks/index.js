@@ -1,8 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
-const prisma = new PrismaClient();
-
 // GET /api/tasks -> get all tasks
 export default async function handler(req, res) {
   if (req.method === "GET") {

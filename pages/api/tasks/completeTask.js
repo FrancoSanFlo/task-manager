@@ -1,19 +1,16 @@
-import { PrismaClient } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
-const prisma = new PrismaClient();
-
-// POST /api/tasks/complete -> complete a task
-export async function handler(req, res) {
-  if (req.method === "POST") {
+// POST /api/tasks/completeTask -> complete a task
+export default async function handler(req, res) {
+  if (req.method === "PUT") {
     const { id } = req.body;
-    return completeTask(id);
+    return completeTask(id, res);
   } else {
     res.status(405).json({ error: "Method not allowed" });
   }
 }
 
-async function completeTask(id) {
+async function completeTask(id, res) {
   try {
     const task = await prisma.task.update({
       where: {
