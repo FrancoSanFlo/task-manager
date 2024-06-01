@@ -1,18 +1,15 @@
-import { PrismaClient } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
-const prisma = new PrismaClient();
-
-// DELETE /api/tasks/deleteAllTasKS -> delete all tasks
+// DELETE /api/tasks/deleteAllTasks -> delete all tasks
 export default async function handler(req, res) {
   if (req.method === "DELETE" && req.url === "/api/tasks/deleteAllTasks") {
-    return deleteAllTasks();
+    return deleteAllTasks(res);
   } else {
     res.status(405).json({ error: "Method not allowed" });
   }
 }
 
-async function deleteAllTasks() {
+async function deleteAllTasks(res) {
   try {
     await prisma.task.deleteMany();
     res.json({ message: "All tasks deleted" });

@@ -1,19 +1,16 @@
-import { PrismaClient } from "@prisma/client";
 import prisma from "@/lib/prisma";
-
-const prisma = new PrismaClient();
 
 // POST /api/tasks/create -> create a task
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { title, description } = req.body;
-    return createTask(title, description);
+    return createTask(title, description, res);
   } else {
     res.status(405).json({ error: "Method not allowed" });
   }
 }
 
-async function createTask(title, description) {
+async function createTask(title, description, res) {
   try {
     const task = await prisma.task.create({
       data: {
