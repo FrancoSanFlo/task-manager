@@ -1,21 +1,27 @@
 import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 const prisma = new PrismaClient();
 
-// delete task by id
+// DELETE /api/tasks/[id] -> delete a task
 export default async function handler(req, res) {
-  const { id } = req.query;
-
   if (req.method === "DELETE") {
-    try {
-      await prisma.task.delete({
-        where: { id: Number(id) },
-      });
-      res.status(200).json({ message: "Task deleted" });
-    } catch (error) {
-      res.status(500).json({ error: "Error deleting task" });
-    }
+    const { id } = req.query;
+    return deleteTask(id);
   } else {
     res.status(405).json({ error: "Method not allowed" });
+  }
+}
+
+async function deleteTask(id) {
+  try {
+    await prisma.task.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    res.json({ message: "Task deleted" });
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting task" });
   }
 }
