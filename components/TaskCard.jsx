@@ -1,8 +1,19 @@
 import Button from "./Button";
 import CheckIcon from "./CheckIcon";
 import DeleteIcon from "./DeleteIcon";
+import UndoIcon from "./UndoIcon";
+import Task from "@/models/task";
 
-const TaskCard = ({ task, handleDelete, handleComplete }) => {
+const TaskCard = ({ taskData, handleDelete, handleComplete }) => {
+  const task = new Task(
+    taskData.id,
+    taskData.title,
+    taskData.description,
+    taskData.done,
+    taskData.createdAt,
+    taskData.updatedAt
+  );
+
   return (
     <div>
       <div className="bg-white shadow-md rounded-md p-4">
@@ -14,16 +25,22 @@ const TaskCard = ({ task, handleDelete, handleComplete }) => {
                 <span className="text-green-500 font-semibold p-1 rounded-md text-sm sm:text-md">
                   Completed
                 </span>
+                <Button
+                  className="text-blue-950 p-2 rounded-full transition ease-in-out duration-300 hover:bg-blue-950 hover:text-white text-sm sm:text-md"
+                  onButtonClick={() => handleComplete(task)}
+                >
+                  <UndoIcon />
+                </Button>
               </>
             ) : (
               <>
                 <span className="text-red-500 font-semibold text-sm sm:text-md">
                   Not Completed
                 </span>
-                  <Button
-                    className="text-blue-950 p-2 rounded-full transition ease-in-out duration-300 hover:bg-blue-950 hover:text-white text-sm sm:text-md"
-                    onButtonClick={() => handleComplete(task)}
-                  >
+                <Button
+                  className="text-blue-950 p-2 rounded-full transition ease-in-out duration-300 hover:bg-blue-950 hover:text-white text-sm sm:text-md"
+                  onButtonClick={() => handleComplete(task)}
+                >
                   <CheckIcon />
                 </Button>
               </>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export const useTasks = (url) => {
   const [data, setData] = useState([]);
@@ -28,12 +28,12 @@ export const useTasks = (url) => {
 
   const deleteTask = async (id) => {
     try {
-      const res = await fetch(`${url}/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${url}/${id}`, { method: "DELETE" });
 
       if (res.ok) {
-        setData(data.filter(task => task.id !== id));
+        setData(data.filter((task) => task.id !== id));
       } else {
-        throw new Error('Error deleting task');
+        throw new Error("Error deleting task");
       }
     } catch (error) {
       setError(error);
@@ -42,18 +42,17 @@ export const useTasks = (url) => {
 
   const completeTask = async (task) => {
     try {
-      console.log(task);
       const res = await fetch("/api/tasks/completeTask", {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(task)
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task),
       });
 
       if (res.ok) {
         const json = await res.json();
-        setData(data.map(task => task.id === id ? json : task));
+        setData(data.map((t) => (t.id === task.id ? json : t)));
       } else {
-        throw new Error('Error updating task');
+        throw new Error("Error updating task");
       }
     } catch (error) {
       setError(error);
