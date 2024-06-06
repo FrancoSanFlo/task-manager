@@ -1,16 +1,27 @@
 "use client";
 
-import Header from "@/components/Header";
 import SideMenu from "@/components/SideMenu";
 import Dashboard from "@/components/Dashboard";
+import { useTasks } from "@/hooks/useTasks";
 
 const Home = () => {
+  const {
+    data: tasks,
+    isLoading: isFetching,
+    deleteTask,
+    completeTask,
+  } = useTasks("/api/tasks");
+
   return (
     <>
-      <Header handleButtonClick={() => console.log("Button is clicked!")} />
-      <div className="w-full flex flex-col pt-2 md:flex-row h-full">
-        <SideMenu />
-        <Dashboard />
+      <div className="w-full flex flex-col pt-2 sm:flex-row h-full">
+        <SideMenu tasks={tasks} />
+        <Dashboard
+          tasks={tasks}
+          isFetching={isFetching}
+          deleteTask={deleteTask}
+          completeTask={completeTask}
+        />
       </div>
     </>
   );
