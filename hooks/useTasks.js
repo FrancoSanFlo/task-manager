@@ -59,5 +59,17 @@ export const useTasks = (url) => {
     }
   };
 
-  return { data, isLoading, error, deleteTask, completeTask };
+  const createTask = async (task) => {
+    try {
+      const res = await fetch("/api/tasks/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task),
+      });
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  return { data, isLoading, error, deleteTask, completeTask, createTask };
 };
