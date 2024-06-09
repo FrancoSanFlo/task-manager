@@ -14,8 +14,8 @@ const TaskModal = ({ onClose, createTask }) => {
     }
     setError(null);
     const task = new Task(undefined, title, description, false);
-    console.log("Task created:", task);
-    console.log("Task created:", { title, description });
+    createTask(task);
+    onClose();
   };
 
   const handleClickOutside = (event) => {

@@ -66,6 +66,12 @@ export const useTasks = (url) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(task),
       });
+      if (res.ok) {
+        const json = await res.json();
+        setData([...data, json.task]);
+      } else {
+        throw new Error("Error creating task");
+      }
     } catch (error) {
       setError(error);
     }
